@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("user@example.com");
   const [password, setPassword] = useState("123456");
-  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const redirectUri =
+    searchParams.get("redirect_uri") || "http://localhost:3000";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,7 +24,7 @@ export default function LoginPage() {
     const data = await res.json();
     if (res.ok) {
       localStorage.setItem("accessToken", data.token);
-      router.push("http://localhost:3000");
+      window.location.href = redirectUri; // redirect after successful login
     } else {
       alert("Login failed");
     }
