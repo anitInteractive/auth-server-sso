@@ -1,7 +1,11 @@
 import { cookies } from "next/headers";
 import { NextResponse, NextRequest } from "next/server";
 
-const allowedOrigins = ["http://localhost:3000", "http://localhost:3001"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "http://localhost:3002",
+];
 
 function getCORSHeaders(origin: string | null) {
   const headers: Record<string, string> = {};

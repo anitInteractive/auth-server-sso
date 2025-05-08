@@ -3,7 +3,11 @@ import jwt from "jsonwebtoken";
 
 const JWT_SECRET = "your_jwt_secret";
 const user = { id: 1, email: "user@example.com" };
-const allowedOrigins = ["http://localhost:3000", "http://localhost:3001"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "http://localhost:3002",
+];
 
 function getCORSHeaders(origin: string | null) {
   const headers: Record<string, string> = {};

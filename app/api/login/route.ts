@@ -5,7 +5,11 @@ import { cookies } from "next/headers";
 const JWT_SECRET = "sso-server";
 const user = { id: 1, email: "user@example.com", password: "123456" };
 
-const allowedOrigins = ["http://localhost:3000", "http://localhost:3001"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "http://localhost:3002",
+];
 
 function getCORSHeaders(origin: string | null) {
   const headers: Record<string, string> = {};
@@ -46,8 +50,8 @@ export async function POST(req: NextRequest) {
 
     (await cookies()).set("sso_session", "true", {
       httpOnly: true,
-      sameSite: "lax",
-      secure: false,
+      sameSite: "none",
+      secure: true,
     });
 
     return response;

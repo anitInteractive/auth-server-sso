@@ -1,13 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useSearchParams, usePathname } from "next/navigation";
+import Cookies from "js-cookie";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("user@example.com");
   const [password, setPassword] = useState("123456");
 
+  const sso_session = Cookies.get("sso_session");
+  console.log("sso_session", sso_session);
+
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const redirectUri =
     searchParams.get("redirect_uri") || "http://localhost:3000";
 
@@ -29,6 +34,13 @@ export default function LoginPage() {
       alert("Login failed");
     }
   };
+
+  useEffect(() => {
+    if (window.location.href.includes("redirect_uri")) {
+      localStorage.clear();
+      fetch("http://localhost:3000/api/logout", { method: "POST" });
+    }
+  }, []);
 
   return (
     <main className="p-4">
